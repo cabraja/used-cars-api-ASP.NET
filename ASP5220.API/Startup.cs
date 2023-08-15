@@ -49,6 +49,16 @@ namespace ASP5220.API
         {
             var appSettings = new AppSettings();
 
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder.WithOrigins("http://localhost:8080", "http://localhost:4200")
+                           .AllowAnyHeader()
+                           .AllowAnyMethod();
+                });
+            });
+
             Configuration.Bind(appSettings);
             services.AddTransient<ITokenStorage, InMemoryTokenStorage>();
 
@@ -158,6 +168,8 @@ namespace ASP5220.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ASP5220.API v1"));
             }
+
+            app.UseCors();
 
             app.UseRouting();
 

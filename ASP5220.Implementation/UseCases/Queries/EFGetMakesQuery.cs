@@ -46,7 +46,7 @@ namespace ASP5220.Implementation.UseCases.Queries
             var response = new PaginationResponse<MakeDTO>();
 
             response.TotalCount = query.Count();
-            response.Data = query.Skip(toSkip).Take(search.PerPage.Value).Select(x => new MakeDTO { Name = x.Name, CarCount = x.Cars.Count });
+            response.Data = query.Skip(toSkip).Take(search.PerPage.Value).Select(x => new MakeDTO { Id = x.Id,Name = x.Name, CarCount = x.Cars.Count });
             response.CurrentPage = search.Page.Value;
             response.ItemsPerPage = search.PerPage.Value;
             response.PageCount = (int)Math.Ceiling((float)response.TotalCount / search.PerPage.Value);

@@ -2,6 +2,7 @@
 using ASP5220.Application.UseCases.DTO.Searches;
 using ASP5220.Application.UseCases.Queries;
 using ASP5220.DataAccess;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,11 +23,11 @@ namespace ASP5220.Implementation.UseCases.Queries
 
         public PaginationResponse<CarDTO> Execute(BasePaginationSearch search)
         {
-            var query = Context.Cars.AsQueryable();
+            var query = Context.Cars.Include(x => x.User).AsQueryable();
 
             if (!string.IsNullOrEmpty(search.Keyword))
             {
-                query = query.Where(x => x.Model.Contains(search.Keyword) || x.Variant.Contains(search.Keyword) || x.Make.Name.Contains(search.Keyword));
+                query = query.Where(x => x.Model.Contains(search.Keyword) || x.Variant.Contains(search.Keyword) || x.Make.Name.Contains(search.Keyword) || x.User.Username.Contains(search.Keyword));
             }
 
             if (search.PerPage == null || search.PerPage < 1)

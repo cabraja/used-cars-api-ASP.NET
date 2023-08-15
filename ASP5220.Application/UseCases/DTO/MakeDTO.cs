@@ -8,6 +8,7 @@ namespace ASP5220.Application.UseCases.DTO
 {
     public class MakeDTO
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public int CarCount { get; set; }
     }
